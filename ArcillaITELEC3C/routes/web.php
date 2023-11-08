@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,12 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/category', function () {
-        return view('category');
-    })->name('category');
+    // Route::get('/category', function () {
+    //     return view('category');
+    // })->name('category');
+    
+    Route::get('/category', [CategoryController ::class,'index'])->name('category');
+    Route::get('/category/create', CategoryController::class.'@create')->name('category.create');
+    Route::post('/category', CategoryController::class.'@store')->name('category.store');
+
 });
