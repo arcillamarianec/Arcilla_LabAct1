@@ -28,7 +28,7 @@
                             <td>{{ $category->created_at->diffForHumans() }}</td>
                             <td>
                                 <a href="{{url('edit/'.$category->id)}}" class="btn btn-info">Edit</a>
-                                <a href="">Delete</a>
+                                <a href="{{url('delete/'.$category->id)}}">Delete</a>
                             </td>
                         </tr>
                         @endforeach

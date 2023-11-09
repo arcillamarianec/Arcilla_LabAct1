@@ -36,4 +36,9 @@ class CategoryController extends Controller
         ]);
         return Redirect()->route('category')->with('success','Updated Successfully');
     }
+    public function DeleteCat($id) {
+        $categories = Category::find($id);
+        $categories->delete();
+        return Redirect()->route('category')->with('success','Deleted Successfully');
+    }
 }
