@@ -31,7 +31,7 @@ Route::middleware([
     // })->name('category');
     
     Route::get('/category', [CategoryController ::class,'index'])->name('category');
-    Route::get('/category/create', CategoryController::class.'@create')->name('category.create');
-    Route::post('/category', CategoryController::class.'@store')->name('category.store');
-
+    Route::post('/category/add', [CategoryController::class,'AddCat'])->name('add.category');
+    Route::get('edit/{id}', [CategoryController::class,'EditCat']);
+    Route::post('update/{id}', [CategoryController::class,'Update'])->name('update.category');
 });

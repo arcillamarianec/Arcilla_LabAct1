@@ -13,9 +13,10 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Category Name</th>
-                            <th>Category Id</th>
+                            <th>Name</th>
+                            <th>User Name</th>
                             <th>Created At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,14 +24,20 @@
                         <tr>
                             <td>{{ $category->id }}</td>
                             <td>{{ $category->category_name }}</td>
-                            <td>{{ $category->user_id }}</td>
-                            <td>{{ $category->created_at }}</td>
+                            <td>{{ $category->user->name }}</td>                            
+                            <td>{{ $category->created_at->diffForHumans() }}</td>
+                            <td>
+                                <a href="{{url('edit/'.$category->id)}}" class="btn btn-info">Edit</a>
+                                <a href="">Delete</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{$categories->links()}}
                 <h2 style="font-weight: bold; font-size:22px">Add a Category</h2>
-                <form method="POST" action="{{ route('category') }}">
+                
+                <form method="POST" action="{{ route('add.category') }}">
                     @csrf
                     <!-- CSRF protection -->
                     <div style="width: 30%;">
@@ -39,23 +46,20 @@
                                 <div class="form-group">
                                     <td><label for="category_name">Category Name</label></td>
                                     <td><input type="text" id="category_name" name="category_name" class="form-control"
-                                            required></td>
+                                            required>
+                                            @error('category_name')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
+                                        </td>
                                 </div>
-                            </tr>
-                            <tr>
-
-                                <div class="form-group">
-                                    <td><label for="user_id">User ID</label></td>
-                                    <td><input type="number" id="user_id" name="user_id" class="form-control" required>
-                                    </td>
-                                </div>
-
                             </tr>
                         </table>
-                        <center><button type="submit" class="btn btn-primary" style="background-color: azure;">Add
-                                Category</button></center>
+                        <center><button type="submit" class="btn btn-primary" style="background-color: azure;">
+                            Add Category</button>
+                        </center>
                     </div>
                 </form>
+           
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Dashboard') }}</br>
+            Hi...{{Auth::user()->name}}</br>
+            {{-- I have {{count($users)}} users --}}
         </h2>
     </x-slot>
 
@@ -23,7 +25,7 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at }}</td>
+                            <td>{{ $user->created_at->diffForHumans() }}</td>
                         </tr>
                         @endforeach
                     </tbody>

@@ -4,51 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-    // public function store(Request $request)
-    // {
-    //     $category = new Category();
-    //     $category->name = $request->input('name');
-    //     $category->save();
-    
-    //     return redirect()->route('categories.index');
-    // }
-
     public function index() {
-    $categories = Category::all();
+    $categories = Category::latest()->paginate('5');
+    // all();
     return view('category', compact('categories'));
     }
-    // public function store(Request $request)
-    // {
-    //     // Validate the input
-    //     $request->validate([
-    //         'category_name' => 'required|string|max:255',
-    //         'user_id' => 'required|integer',
-    //     ]);
-    
-    //     // Create a new category
-    //     $category = new Category;
-    //     $category->category_name = $request->input('category_name');
-    //     $category->user_id = $request->input('user_id');
-    //     $category->save();
-    
-    //     return redirect('/category');
-
-    // }<?php
-
-    public function store(Request $request)
-    {
-        $category_name = $request->input('category_name');
-        $user_id = $request->input('user_id');
-
-        $category = new Category;
-        $category->category_name = $category_name;
-        $category->user_id = $user_id;
-        $category->save();
-
-        return redirect()->route('category');
+    public function AddCat(Request $request) {
+        $validated = $request->validate([
+            'category_name'=>'required|unique:categories|max:255'
+        ]);
+         Category::create([
+            'category_name'=>$request->category_name,
+            'user_id'=>Auth::user()->id,
+            'created_at'=>Carbon::now()
+         ]);
+         return Redirect()->back()->with('success','Category Inserted Successfully');
     }
-
+    public function EditCat($id) {
+        $categories = Category::find($id);
+        return view('edit', compact('categories'));
+    }
+    public function Update(Request $request, $id) {
+        $update = Category::find($id)->update([
+                'category_name'=>$request->category_name,
+                'user_id'=>Auth::user()->id
+        ]);
+        return Redirect()->route('category')->with('success','Updated Successfully');
+    }
 }
