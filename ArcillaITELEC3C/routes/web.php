@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +36,17 @@ Route::middleware([
     Route::get('edit/{id}', [CategoryController::class,'EditCat']);
     Route::post('update/{id}', [CategoryController::class,'Update'])->name('update.category');
     Route::get('delete/{id}', [CategoryController::class,'DeleteCat']);
+
+
+    // BRANDS
+    Route::get('/brand', [BrandController ::class,'index'])->name('brand');
+    Route::post('/brand/add', [BrandController::class,'AddBrand'])->name('add.brand');
+    Route::get('/brand/edit/{id}', [BrandController::class,'EditBrand']);
+    Route::post('/brand/update/{id}', [BrandController::class,'UpdateBrand']);
+    Route::get('/brand/remove/{id}', [BrandController::class,'RemoveBrand']);
+    Route::get('/brand/restore/{id}', [BrandController::class,'RestoreBrand']);
+    Route::get('/brand/delete/{id}', [BrandController::class,'DeleteBrand']);
+
+
+
 });
